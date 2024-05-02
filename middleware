@@ -1,0 +1,30 @@
+// Middleware function to log the request method and URL
+const logger = (req, res, next) => {
+  console.log(${req.method} ${req.url});
+  next(); // Call the next middleware function in the stack
+};
+
+// Middleware function to handle errors
+const errorHandler = (err, req, res, next) => {
+  console.error(err);
+  res.status(500).send('Internal Server Error');
+};
+
+// Express application with middleware
+const express = require('express');
+const app = express();
+
+// Register middleware functions
+app.use(logger);
+app.use(errorHandler);
+
+// Route handler
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(Server is running on http://localhost:${PORT});
+});
